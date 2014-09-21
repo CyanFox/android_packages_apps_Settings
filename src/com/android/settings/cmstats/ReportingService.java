@@ -83,7 +83,7 @@ public class ReportingService extends Service {
             // report to google analytics
             GoogleAnalytics ga = GoogleAnalytics.getInstance(ReportingService.this);
             Tracker tracker = ga.getTracker(getString(R.string.ga_trackingId));
-            tracker.sendEvent(deviceName, deviceVersion, deviceCountry, null);
+            //tracker.sendEvent(deviceName, deviceVersion, deviceCountry, null);
 
             // this really should be set at build time...
             // format of version should be:
@@ -97,17 +97,25 @@ public class ReportingService extends Service {
             }
 
             if (deviceVersionNoDevice != null) {
-                tracker.sendEvent("checkin", deviceName, deviceVersionNoDevice, null);
+                tracker.setAppVersion(deviceVersionNoDevice);
+                tracker.sendEvent("versions", deviceVersionNoDevice, deviceName, null);
+                tracker.sendEvent("devices", deviceName, deviceVersionNoDevice, null);
             }
+            else {
+                tracker.setAppVersion(deviceVersion);
+                tracker.sendEvent("versions", deviceVersion, deviceName, null);
+                tracker.sendEvent("devices", deviceName, deviceVersion, null);
+            }
+
             tracker.close();
 
             // report to the cmstats service
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("https://stats.cyanogenmod.org/submit");
+            HttpPost httpPost = new HttpPost("https://www.cyanfox-rom.com/stats/submit/index.php");
             boolean success = false;
 
             try {
-                List<NameValuePair> kv = new ArrayList<NameValuePair>(5);
+                List<NameValuePair> kv = new ArrayList<NameValuePair>(6);
                 kv.add(new BasicNameValuePair("device_hash", deviceId));
                 kv.add(new BasicNameValuePair("device_name", deviceName));
                 kv.add(new BasicNameValuePair("device_version", deviceVersion));
@@ -138,8 +146,8 @@ public class ReportingService extends Service {
                 // use set interval
                 interval = 0;
             } else {
-                // error, try again in 3 hours
-                interval = 3L * 60L * 60L * 1000L;
+                // error, try again in 30 minutes
+                interval = 60L * 30L * 1000L;
             }
 
             ReportingServiceManager.setAlarm(context, interval);
