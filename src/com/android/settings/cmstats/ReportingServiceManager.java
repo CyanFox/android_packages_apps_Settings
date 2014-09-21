@@ -46,9 +46,9 @@ public class ReportingServiceManager extends BroadcastReceiver {
         if (prefs.contains(AnonymousStats.ANONYMOUS_OPT_IN)) {
             migrate(context, prefs);
         }
-        if (!Utilities.isStatsCollectionEnabled(context)) {
+        /*if (!Utilities.isStatsCollectionEnabled(context)) {
             return;
-        }
+        }*/
 
         if (millisFromNow <= 0) {
             long lastSynced = prefs.getLong(AnonymousStats.ANONYMOUS_LAST_CHECKED, 0);
@@ -83,9 +83,9 @@ public class ReportingServiceManager extends BroadcastReceiver {
 
         SharedPreferences prefs = AnonymousStats.getPreferences(context);
 
-        if (!Utilities.isStatsCollectionEnabled(context)) {
+        /*if (!Utilities.isStatsCollectionEnabled(context)) {
             return;
-        }
+        }*/
 
         long lastSynced = prefs.getLong(AnonymousStats.ANONYMOUS_LAST_CHECKED, 0);
         if (lastSynced == 0) {

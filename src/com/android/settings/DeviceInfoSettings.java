@@ -103,12 +103,13 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
         setStringSummary(KEY_DEVICE_MODEL, Build.MODEL + getMsvSuffix());
         setValueSummary(KEY_EQUIPMENT_ID, PROPERTY_EQUIPMENT_ID);
         setStringSummary(KEY_DEVICE_MODEL, Build.MODEL);
-        setStringSummary(KEY_BUILD_NUMBER, Build.DISPLAY);
+        setStringSummary(KEY_BUILD_NUMBER, Build.ID);
         findPreference(KEY_BUILD_NUMBER).setEnabled(true);
         findPreference(KEY_KERNEL_VERSION).setSummary(getFormattedKernelVersion());
-        setValueSummary(KEY_MOD_VERSION, "ro.cm.display.version");
+        setValueSummary(KEY_MOD_VERSION, "ro.cf.version");
         findPreference(KEY_MOD_VERSION).setEnabled(true);
         setValueSummary(KEY_MOD_BUILD_DATE, "ro.build.date");
+        getPreferenceScreen().removePreference(findPreference(KEY_MOD_BUILD_DATE));
 
         if (!SELinux.isSELinuxEnabled()) {
             String status = getResources().getString(R.string.selinux_status_disabled);
@@ -137,7 +138,7 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
             getPreferenceScreen().removePreference(findPreference(KEY_CM_UPDATES));
         }
 
-        if (cpuInfo != null) {
+        /*if (cpuInfo != null) {
             setStringSummary(KEY_DEVICE_CPU, cpuInfo);
         } else {
             getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_CPU));
@@ -147,7 +148,10 @@ public class DeviceInfoSettings extends RestrictedSettingsFragment {
             setStringSummary(KEY_DEVICE_MEMORY, memInfo);
         } else {
             getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_MEMORY));
-        }
+        }*/
+        
+        getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_CPU));
+        getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_MEMORY));
 
         // Remove Safety information preference if PROPERTY_URL_SAFETYLEGAL is not set
         removePreferenceIfPropertyMissing(getPreferenceScreen(), "safetylegal",
