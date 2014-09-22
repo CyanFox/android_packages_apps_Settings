@@ -110,7 +110,7 @@ public class ReportingService extends Service {
             tracker.close();
 
             // report to the cmstats service
-            HttpClient httpClient = new DefaultHttpClient();
+            /*HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost("https://www.cyanfox-rom.com/stats/submit/index.php");
             boolean success = false;
 
@@ -129,7 +129,7 @@ public class ReportingService extends Service {
                 success = true;
             } catch (IOException e) {
                 Log.w(TAG, "Could not upload stats checkin", e);
-            }
+            }*/
 
             return success;
         }
