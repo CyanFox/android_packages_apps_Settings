@@ -112,7 +112,7 @@ public class ReportingService extends Service {
             // report to the cmstats service
             /*HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost("https://www.cyanfox-rom.com/stats/submit/index.php");
-            boolean success = false;
+            boolean success = true;
 
             try {
                 List<NameValuePair> kv = new ArrayList<NameValuePair>(6);
